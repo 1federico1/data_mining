@@ -1,14 +1,22 @@
-from homework2_2 import HashFamilies
+from homework2_2 import HashFamily
+
 
 jobs_announcementes = '../homework2_1/jobs.tsv'
 
 
 class Shingle:
     def __init__(self, document):
+        """
+        :param document: the document we want to obtain the shingles
+        """
         self.document = document
 
     def char_shingle(self, k):
-        if len(document) <= k:
+        """
+        :param k: number of shingles we want to divide the char
+        :return: a list representing the char divided in k-shingles
+        """
+        if len(self.document) <= k:
             return self.document
         words = []
         for i in range(len(self.document)):
@@ -17,20 +25,14 @@ class Shingle:
                 words.append(shingle)
         return words
 
-    def hash_shingles(self, k, hash_fun):
+    def hash_shingles(self, k, hash_function):
+        """
+        :param k: number of shingles we want to divide the char
+        :param hash_function: the hash function we want to use to hash the shingles
+        :return: a list representing the char divided in hashes of the k-shingles representing it
+        """
         hashes = []
         words = self.char_shingle(k)
         for word in words:
-            hashes.append(hash_fun(word))
+            hashes.append(hash_function(word))
         return hashes
-
-
-if __name__ == '__main__':
-    document = 'document number one'
-    s = Shingle(document)
-    shingles = s.char_shingle(4)
-    print(shingles)
-    hf = HashFamilies.HashFamily()
-    hash_fun = hf.hash_family(23)
-    hashes = s.hash_shingles(4, hash_fun)
-    print(hashes)
